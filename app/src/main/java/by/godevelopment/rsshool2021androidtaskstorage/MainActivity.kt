@@ -9,12 +9,19 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
+import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import by.godevelopment.rsshool2021androidtaskstorage.adapter.CatAdapter
+import by.godevelopment.rsshool2021androidtaskstorage.database.CatProvider
 import by.godevelopment.rsshool2021androidtaskstorage.databinding.ActivityMainBinding
+import by.godevelopment.rsshool2021androidtaskstorage.entity.Cat
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
+    private lateinit var dataList: List<Cat>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,10 +35,18 @@ class MainActivity : AppCompatActivity() {
         appBarConfiguration = AppBarConfiguration(navController.graph)
         setupActionBarWithNavController(navController, appBarConfiguration)
 
-        binding.fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show()
+         setup()
+    }
+
+    private fun setup() {
+        setupGoToButton()
+    }
+
+    private fun setupGoToButton() {
+        binding.fab.setOnClickListener { _ ->
+            findNavController(R.id.nav_host_fragment_content_main).navigate(R.id.action_FirstFragment_to_SecondFragment)
         }
+        // TODO "Выбрасывает ошибку когда во втором фрагменте"
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -45,7 +60,20 @@ class MainActivity : AppCompatActivity() {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         return when (item.itemId) {
-            R.id.action_settings -> true
+            R.id.custom_filter -> {
+                Toast.makeText(
+                    this,
+                    "Переход на третий фрагмент", Toast.LENGTH_SHORT
+                ).show()
+                true
+            }
+            R.id.reset_filter -> {
+                Toast.makeText(
+                    this,
+                    "Сброс фильтра. Перегрузка листа с данными", Toast.LENGTH_SHORT
+                ).show()
+                true
+            }
             else -> super.onOptionsItemSelected(item)
         }
     }

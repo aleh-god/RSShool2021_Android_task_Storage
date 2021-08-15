@@ -7,7 +7,7 @@ import android.provider.BaseColumns
 object ContractDB {
     // Table contents are grouped together in an anonymous object.
     object FeedEntry : BaseColumns {
-        const val TABLE_NAME = "Cat_db"
+        const val TABLE_NAME = "Cat_table"
         const val COLUMN_NAME_NAME = "name"
         const val COLUMN_NAME_AGE = "age"
         const val COLUMN_NAME_BREED = "breed"
