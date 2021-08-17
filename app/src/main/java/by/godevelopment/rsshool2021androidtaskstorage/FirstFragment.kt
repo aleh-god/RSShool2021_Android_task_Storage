@@ -12,6 +12,7 @@ import by.godevelopment.rsshool2021androidtaskstorage.adapter.CatAdapter
 import by.godevelopment.rsshool2021androidtaskstorage.database.CatProvider
 import by.godevelopment.rsshool2021androidtaskstorage.databinding.FragmentFirstBinding
 import by.godevelopment.rsshool2021androidtaskstorage.entity.Cat
+import com.google.android.material.snackbar.Snackbar
 
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
@@ -46,23 +47,30 @@ class FirstFragment : Fragment() {
 
     private fun setupRecyclerView() {
 
-        val recyclerView = binding.recyclerView
-        val linearLayoutManager = LinearLayoutManager(context)
-        recyclerView.layoutManager = linearLayoutManager
-
         // TODO "Обернуть в скоуп функцию"
-        val adapter = CatAdapter { position ->
-            myActionClick(dataList[position])
+//        val linearLayoutManager = LinearLayoutManager(context)
+//        val catAdapter = CatAdapter { position ->
+//            myActionClick(dataList[position])
+//        }
+//        val recyclerView = binding.recyclerView
+//        recyclerView.layoutManager = linearLayoutManager
+//        recyclerView.adapter = catAdapter
+
+        binding.recyclerView.apply {
+            layoutManager = LinearLayoutManager(context)
+            adapter = CatAdapter { position ->
+                myActionClick(dataList[position])
+            }
         }
-        recyclerView.adapter = adapter
 
     }
 
     private fun myActionClick(cat: Cat) {
-        Toast.makeText(
-            context,
-            "Выбран котик: ${cat.name}", Toast.LENGTH_SHORT
-        ).show()
+        Snackbar.make(binding.root, "Выбран котик: ${cat.name}", Snackbar.LENGTH_LONG)
+            .setAction("Удалить котика") {
+                // Responds to click on the action
+            }
+            .show()
     }
 
     private fun setupDataList() {
