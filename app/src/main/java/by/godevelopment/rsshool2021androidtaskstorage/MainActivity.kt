@@ -9,7 +9,12 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.Toast
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.navigation.NavController
+import androidx.navigation.NavDestination
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import by.godevelopment.rsshool2021androidtaskstorage.adapter.CatAdapter
@@ -21,6 +26,10 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
+
+    private val destinationListener =
+        NavController.OnDestinationChangedListener { _, _, _ -> upgradeUI() }
+
     private lateinit var dataList: List<Cat>
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,18 +44,37 @@ class MainActivity : AppCompatActivity() {
         appBarConfiguration = AppBarConfiguration(navController.graph)
         setupActionBarWithNavController(navController, appBarConfiguration)
 
-         setup()
+        findNavController(R.id.nav_host_fragment_content_main).addOnDestinationChangedListener(destinationListener)
+
+         upgradeUI()
     }
 
-    private fun setup() {
+    private fun upgradeUI() {
         setupGoToButton()
     }
 
     private fun setupGoToButton() {
-        binding.fab.setOnClickListener { _ ->
-            findNavController(R.id.nav_host_fragment_content_main).navigate(R.id.action_FirstFragment_to_SecondFragment)
+
+        val stringDestFirst = resources.getString(R.string.first_fragment_label)
+        val stringDestSecond = resources.getString(R.string.second_fragment_label)
+        val label = findNavController(R.id.nav_host_fragment_content_main).currentDestination?.label.toString()
+        println(stringDestFirst)
+        println(stringDestSecond)
+        println(label)
+
+        if ( label == stringDestFirst) {
+            binding.fab.setImageResource(android.R.drawable.ic_input_add)
+            binding.fab.setOnClickListener { _ ->
+                findNavController(R.id.nav_host_fragment_content_main).navigate(R.id.action_FirstFragment_to_SecondFragment)
+            }
         }
-        // TODO "Выбрасывает ошибку когда во втором фрагменте"
+        if (label == stringDestSecond) {
+
+            binding.fab.setImageResource(R.drawable.ic_arrow_back_24)
+            binding.fab.setOnClickListener { _ ->
+                findNavController(R.id.nav_host_fragment_content_main).navigate(R.id.action_SecondFragment_to_FirstFragment)
+            }
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -82,5 +110,10 @@ class MainActivity : AppCompatActivity() {
         val navController = findNavController(R.id.nav_host_fragment_content_main)
         return navController.navigateUp(appBarConfiguration)
                 || super.onSupportNavigateUp()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        findNavController(R.id.nav_host_fragment_content_main).removeOnDestinationChangedListener(destinationListener)
     }
 }

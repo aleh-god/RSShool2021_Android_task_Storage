@@ -1,9 +1,7 @@
 package by.godevelopment.rsshool2021androidtaskstorage.adapter
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.annotation.NonNull
 import androidx.recyclerview.widget.RecyclerView
 import by.godevelopment.rsshool2021androidtaskstorage.database.CatProvider
@@ -29,12 +27,9 @@ class CatAdapter(
     override fun getItemCount(): Int = CatProvider.catsList.size
 
     class CatHolder(
-        @NonNull binding: ItemCatBinding,       // Можем передавать что угодно, как само view так и его binding
-        onItemClick: ((position: Int) -> Unit)?
+        @NonNull private val binding: ItemCatBinding,       // Можем передавать что угодно, как само view так и его binding
+        private val onItemClick: ((position: Int) -> Unit)?
     ) : RecyclerView.ViewHolder(binding.root) {     // Но вернуть в конструктор должны именно view
-        private val textName: TextView = binding.Name
-        private val textAge: TextView = binding.Age
-        private val textBreed: TextView = binding.Breed
 
         init {
             itemView.setOnClickListener {
@@ -44,9 +39,11 @@ class CatAdapter(
         }
 
         fun bindTo(cat: Cat) {
-            textName.text = ("Name cat: ${cat.name}").toString()
-            textAge.text = ("Age cat: ${cat.age}").toString()
-            textBreed.text = ("Breed cat: ${cat.breed}").toString()
+            with (binding) {
+                Name.text = ("Name cat: ${cat.name}").toString()
+                Age.text = ("Age cat: ${cat.age}").toString()
+                Breed.text = ("Breed cat: ${cat.breed}").toString()
+            }
         }
     }
 
