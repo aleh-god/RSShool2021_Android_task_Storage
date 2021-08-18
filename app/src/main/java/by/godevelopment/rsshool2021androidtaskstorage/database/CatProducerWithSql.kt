@@ -9,16 +9,13 @@ import by.godevelopment.rsshool2021androidtaskstorage.entity.Cat
 
 class CatProducerWithSql(context: Context) {
 
-    // DELETE FROM cat_table WHERE id = 1;
-    // INSERT INTO cat_table (name, age, breed) VALUES ("Jesus", 33, "Heaven");
-    // UPDATE cat_table SET name = 'Pluton' WHERE ID = 33;
-
     private val catReaderDbHelper = CatReaderDbHelper(context)
     private val db_read = catReaderDbHelper.readableDatabase
     private val db_write = catReaderDbHelper.writableDatabase
 
+
     private fun getCursorWithTopics(): Cursor {
-        return db_read.rawQuery("SELECT * FROM $ContractDB.TABLE_NAME", null)
+        return db_read.rawQuery("SELECT * FROM ${ContractDB.FeedEntry.TABLE_NAME}", null)
     }
 
     fun getListOfCats(): List<Cat> {
@@ -35,6 +32,7 @@ class CatProducerWithSql(context: Context) {
                     listOfTopics.add(Cat(id, name, age, breed))
                 } while (cursor.moveToNext())
             }
+            // cursor.close() Надо ли здесь закрытие курсора?
         }
         return ArrayList(listOfTopics)
     }
@@ -100,10 +98,12 @@ class CatProducerWithSql(context: Context) {
         val selectionArgs = arrayOf("$idCat")
         // Issue SQL statement.
         val deletedRows = db_write.delete(ContractDB.FeedEntry.TABLE_NAME, selection, selectionArgs)
+
         if (deletedRows != 0) return true
         return false
     }
 
+    // TODO "изменить кота на поля-атрибуты"
     fun updateCatInDataBase(cat: Cat): Boolean {
         // New value for one column
         val values = ContentValues().apply {
@@ -125,6 +125,10 @@ class CatProducerWithSql(context: Context) {
 
         if (updateRows != 0) return true
         return false
+    }
+
+    fun helperClose() {
+        catReaderDbHelper.close()
     }
 
 }

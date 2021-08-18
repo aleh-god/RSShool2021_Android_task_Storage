@@ -3,16 +3,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="by.godevelopment.rsshool2021androidtaskstorage.MainActivity">
     <item
-        android:id="@+id/custom_filter"
+        android:id="@+id/custom_order"
         android:orderInCategory="100"
-        android:title="@string/custom_filter"
+        android:title="@string/custom_order"
         app:showAsAction="never"
         />
 
     <item
-        android:id="@+id/reset_filter"
+        android:id="@+id/reset_order"
         android:orderInCategory="100"
-        android:title="@string/reset_filter"
+        android:title="@string/reset_order"
         app:showAsAction="never"
         />
 </menu>

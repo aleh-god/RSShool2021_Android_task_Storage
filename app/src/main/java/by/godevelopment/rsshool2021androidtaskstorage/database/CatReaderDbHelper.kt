@@ -1,9 +1,11 @@
 package by.godevelopment.rsshool2021androidtaskstorage.database
 
 import android.content.Context
+import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import android.provider.BaseColumns
+import android.util.Log
 
 class CatReaderDbHelper(context: Context) : SQLiteOpenHelper(
     context,
@@ -14,6 +16,9 @@ class CatReaderDbHelper(context: Context) : SQLiteOpenHelper(
     override fun onCreate(db: SQLiteDatabase) {
         db.execSQL(SQL_CREATE_ENTRIES)
         db.execSQL(SQL_INSERT_ENTRIES)
+
+        Log.i("DATABASE", SQL_CREATE_ENTRIES)
+        Log.i("DATABASE", SQL_INSERT_ENTRIES)
     }
 
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
@@ -42,6 +47,7 @@ class CatReaderDbHelper(context: Context) : SQLiteOpenHelper(
                     "${ContractDB.FeedEntry.COLUMN_NAME_BREED} TEXT)"
 
         private const val SQL_INSERT_ENTRIES =
+//            "INSERT INTO cat_table (name, age, breed) VALUES ('Jesus', 33, 'Heaven');"
             "INSERT INTO cat_table (name, age, breed) VALUES (\"Missy\", 4, \"Snowshoe\"),(\"Lucy\", 11, \"Chausie\"),(\"Oscar\", 14, \"Aegean\"),(\"Simba\", 2, \"Savannah\"),(\"Oliver\", 2, \"Maine Coon\"),(\"Simba\", 6, \"Oriental Longhair\"),(\"Alfie\", 18, \"Toyger\"),(\"Shadow\", 3, \"Lykoi\"),(\"Lucy\", 16, \"Chausie\"),(\"Misty\", 11, \"Highlander\"),(\"Felix\", 12, \"Abyssinian\"),(\"Felix\", 2, \"Egyptian Mau\"),(\"Oliver\", 10, \"Sokoke\"),(\"Daisy\", 6, \"Abyssinian\"),(\"Coco\", 4, \"Snowshoe\"),(\"Smokey\", 1, \"Norwegian Forest Cat\"),(\"Lucy\", 13, \"Ocicat\"),(\"Lucky\", 13, \"Exotic Shorthair\"),(\"Smokey\", 17, \"Oriental Bicolor\"),(\"Coco\", 16, \"American Shorthair\"),(\"Oliver\", 10, \"Siamese\"),(\"Missy\", 16, \"Minskin\"),(\"Molly\", 4, \"Tonkinese\"),(\"Simba\", 4, \"Korn Ja\"),(\"Coco\", 8, \"Toyger\"),(\"Millie\", 14, \"Japanese Bobtail\"),(\"Poppy\", 6, \"American Bobtail\"),(\"Alfie\", 6, \"Napoleon\"),(\"Molly\", 13, \"California Spangled\"),(\"Bella\", 7, \"Manx\");"
 
         private const val SQL_DELETE_ENTRIES = "DROP TABLE IF EXISTS ${ContractDB.FeedEntry.TABLE_NAME}"

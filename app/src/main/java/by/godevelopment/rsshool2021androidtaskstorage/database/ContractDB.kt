@@ -11,9 +11,13 @@ object ContractDB {
     // называемое _ID , наличие которых будут ожидать некоторые Android классы, такие как курсоры адаптеров.
     // Это не обязательно, но это может помочь вашей работе с базой данных в гармонии с библиотеками Android.
     object FeedEntry : BaseColumns {
-        const val TABLE_NAME = "Cat_table"
+        const val TABLE_NAME = "cat_table"
         const val COLUMN_NAME_NAME = "name"
         const val COLUMN_NAME_AGE = "age"
         const val COLUMN_NAME_BREED = "breed"
+
+        // DELETE FROM cat_table WHERE id = 1;
+        // INSERT INTO cat_table (name, age, breed) VALUES ("Jesus", 33, "Heaven");
+        // UPDATE cat_table SET name = 'Pluton' WHERE ID = 33;
     }
 }

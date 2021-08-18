@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.annotation.NonNull
 import androidx.recyclerview.widget.RecyclerView
+import by.godevelopment.rsshool2021androidtaskstorage.database.CatProducerWithSql
 import by.godevelopment.rsshool2021androidtaskstorage.database.CatProvider
 import by.godevelopment.rsshool2021androidtaskstorage.entity.Cat
 import by.godevelopment.rsshool2021androidtaskstorage.databinding.ItemCatBinding
@@ -21,11 +22,11 @@ class CatAdapter(
     }
 
     override fun onBindViewHolder(holder: CatHolder, position: Int) {
-        val cat = CatProvider.catsList[position]
+        val cat = CatProvider.catsListSQL[position]
         holder.bindTo(cat)
     }
 
-    override fun getItemCount(): Int = CatProvider.catsList.size
+    override fun getItemCount(): Int = CatProvider.catsListSQL.size
 
     class CatHolder(
         @NonNull private val binding: ItemCatBinding,       // Можем передавать что угодно, как само view так и его binding
@@ -45,7 +46,7 @@ class CatAdapter(
                 Age.text = ("Age cat: ${cat.age}").toString()
                 Breed.text = ("Breed cat: ${cat.breed}").toString()
 
-                Log.i("bindTo", "(*${cat.name}*, ${cat.age}, *${cat.breed}*)")
+                // Log.i("bindTo", "(*${cat.name}*, ${cat.age}, *${cat.breed}*)")
             }
         }
     }

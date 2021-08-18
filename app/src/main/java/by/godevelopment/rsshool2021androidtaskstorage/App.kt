@@ -5,5 +5,7 @@ import by.godevelopment.rsshool2021androidtaskstorage.database.CatProducerWithSq
 
 class App : Application() {
 
-    val catProducer = CatProducerWithSql(this)
+   // val catProducer = CatProducerWithSql(applicationContext)
 }
+
+// android:name=".App"

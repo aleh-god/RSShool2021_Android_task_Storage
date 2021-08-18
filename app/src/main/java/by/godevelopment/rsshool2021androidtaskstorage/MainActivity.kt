@@ -18,7 +18,9 @@ import androidx.navigation.NavDestination
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import by.godevelopment.rsshool2021androidtaskstorage.adapter.CatAdapter
+import by.godevelopment.rsshool2021androidtaskstorage.database.CatProducerWithSql
 import by.godevelopment.rsshool2021androidtaskstorage.database.CatProvider
+import by.godevelopment.rsshool2021androidtaskstorage.database.CatReaderDbHelper
 import by.godevelopment.rsshool2021androidtaskstorage.databinding.ActivityMainBinding
 import by.godevelopment.rsshool2021androidtaskstorage.entity.Cat
 
@@ -27,8 +29,10 @@ class MainActivity : AppCompatActivity() {
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
 
+    private lateinit var catProducer: CatProducerWithSql
+
     private val destinationListener =
-        NavController.OnDestinationChangedListener { _, _, _ -> upgradeUI() }
+        NavController.OnDestinationChangedListener { _, _, _ -> setupGoToButton() }
 
     private lateinit var dataList: List<Cat>
 
@@ -38,19 +42,28 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+         setupComponents()
+    }
+
+    private fun setupComponents() {
         setSupportActionBar(binding.toolbar)
 
+        setupNavigation()
+        setupGoToButton()
+        setupDataBase()
+    }
+
+    private fun setupNavigation() {
         val navController = findNavController(R.id.nav_host_fragment_content_main)
         appBarConfiguration = AppBarConfiguration(navController.graph)
         setupActionBarWithNavController(navController, appBarConfiguration)
 
         findNavController(R.id.nav_host_fragment_content_main).addOnDestinationChangedListener(destinationListener)
-
-         upgradeUI()
     }
 
-    private fun upgradeUI() {
-        setupGoToButton()
+    private fun setupDataBase() {
+        catProducer = CatProducerWithSql(applicationContext)
+        CatProvider.setCatsList(catProducer.getListOfCats())
     }
 
     private fun setupGoToButton() {
@@ -58,9 +71,6 @@ class MainActivity : AppCompatActivity() {
         val stringDestFirst = resources.getString(R.string.first_fragment_label)
         val stringDestSecond = resources.getString(R.string.second_fragment_label)
         val label = findNavController(R.id.nav_host_fragment_content_main).currentDestination?.label.toString()
-        println(stringDestFirst)
-        println(stringDestSecond)
-        println(label)
 
         if ( label == stringDestFirst) {
             binding.fab.setImageResource(android.R.drawable.ic_input_add)
@@ -88,14 +98,11 @@ class MainActivity : AppCompatActivity() {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         return when (item.itemId) {
-            R.id.custom_filter -> {
-                Toast.makeText(
-                    this,
-                    "Переход на третий фрагмент", Toast.LENGTH_SHORT
-                ).show()
+            R.id.custom_order -> {
+                findNavController(R.id.nav_host_fragment_content_main).navigate(R.id.action_FirstFragment_to_ThirdFragment)
                 true
             }
-            R.id.reset_filter -> {
+            R.id.reset_order -> {
                 Toast.makeText(
                     this,
                     "Сброс фильтра. Перегрузка листа с данными", Toast.LENGTH_SHORT
@@ -115,5 +122,6 @@ class MainActivity : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
         findNavController(R.id.nav_host_fragment_content_main).removeOnDestinationChangedListener(destinationListener)
+        catProducer.helperClose()
     }
 }
