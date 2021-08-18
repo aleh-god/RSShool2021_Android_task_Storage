@@ -1,26 +1,15 @@
 package by.godevelopment.rsshool2021androidtaskstorage
 
 import android.os.Bundle
-import com.google.android.material.snackbar.Snackbar
+import android.view.Menu
+import android.view.MenuItem
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
-import android.view.Menu
-import android.view.MenuItem
-import android.view.View
-import android.widget.Toast
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import androidx.navigation.NavController
-import androidx.navigation.NavDestination
-import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
-import by.godevelopment.rsshool2021androidtaskstorage.adapter.CatAdapter
-import by.godevelopment.rsshool2021androidtaskstorage.database.CatProducerWithSql
-import by.godevelopment.rsshool2021androidtaskstorage.database.CatProvider
-import by.godevelopment.rsshool2021androidtaskstorage.database.CatReaderDbHelper
 import by.godevelopment.rsshool2021androidtaskstorage.databinding.ActivityMainBinding
 import by.godevelopment.rsshool2021androidtaskstorage.entity.Cat
 
@@ -29,7 +18,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
 
-    private lateinit var catProducer: CatProducerWithSql
+    // private lateinit var catProducer: CatProducerWithSql
 
     private val destinationListener =
         NavController.OnDestinationChangedListener { _, _, _ -> setupGoToButton() }
@@ -62,8 +51,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupDataBase() {
-        catProducer = CatProducerWithSql(applicationContext)
-        CatProvider.setCatsList(catProducer.getListOfCats())
+        // catProducer = CatProducerWithSql(applicationContext)
+        // CatProvider.setCatsList(catProducer.getListOfCats())
+
     }
 
     private fun setupGoToButton() {
@@ -99,7 +89,7 @@ class MainActivity : AppCompatActivity() {
         // as you specify a parent activity in AndroidManifest.xml.
         return when (item.itemId) {
             R.id.custom_order -> {
-                findNavController(R.id.nav_host_fragment_content_main).navigate(R.id.action_FirstFragment_to_ThirdFragment)
+                findNavController(R.id.nav_host_fragment_content_main).navigate(R.id.ThirdFragment_dest)
                 true
             }
             R.id.reset_order -> {
@@ -122,6 +112,6 @@ class MainActivity : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
         findNavController(R.id.nav_host_fragment_content_main).removeOnDestinationChangedListener(destinationListener)
-        catProducer.helperClose()
+        // catProducer.helperClose()
     }
 }

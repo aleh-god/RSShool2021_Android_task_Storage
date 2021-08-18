@@ -5,11 +5,12 @@ import android.content.Context
 import android.database.Cursor
 import android.provider.BaseColumns
 import android.util.Log
+import by.godevelopment.rsshool2021androidtaskstorage.adapter.OrderType
 import by.godevelopment.rsshool2021androidtaskstorage.entity.Cat
 
 class CatProducerWithSql(context: Context) {
 
-    private val catReaderDbHelper = CatReaderDbHelper(context)
+    private val catReaderDbHelper = CatReaderDbHelper(context.applicationContext)
     private val db_read = catReaderDbHelper.readableDatabase
     private val db_write = catReaderDbHelper.writableDatabase
 
@@ -32,9 +33,17 @@ class CatProducerWithSql(context: Context) {
                     listOfTopics.add(Cat(id, name, age, breed))
                 } while (cursor.moveToNext())
             }
-            // cursor.close() Надо ли здесь закрытие курсора?
+            cursor.close()
         }
         return ArrayList(listOfTopics)
+    }
+
+    fun getSortedListOfCats(order: OrderType): List<Cat> {
+        return when (order) {
+            OrderType.NAME -> getListOfCats().sortedBy { Cat -> Cat.name }
+            OrderType.AGE -> getListOfCats().sortedBy { Cat -> Cat.age }
+            OrderType.BREED -> getListOfCats().sortedBy { Cat -> Cat.breed }
+        }
     }
 
     fun insertCatInDataBase(cat: Cat): Boolean {
@@ -104,19 +113,19 @@ class CatProducerWithSql(context: Context) {
     }
 
     // TODO "изменить кота на поля-атрибуты"
-    fun updateCatInDataBase(cat: Cat): Boolean {
+    fun updateCatInDataBase(id: Int, name: String, age: Int, breed: String): Boolean {
         // New value for one column
         val values = ContentValues().apply {
-            put(ContractDB.FeedEntry.COLUMN_NAME_NAME, cat.name)
-            put(ContractDB.FeedEntry.COLUMN_NAME_AGE, cat.age)
-            put(ContractDB.FeedEntry.COLUMN_NAME_BREED, cat.breed)
+            put(ContractDB.FeedEntry.COLUMN_NAME_NAME, name)
+            put(ContractDB.FeedEntry.COLUMN_NAME_AGE, age)
+            put(ContractDB.FeedEntry.COLUMN_NAME_BREED, breed)
         }
 
         // Which row to update, based on the title
         val selection = "${BaseColumns._ID} LIKE ?"
 
         // You may include ?s in the where clause, which will be replaced by the values from whereArgs. The values will be bound as Strings.
-        val selectionArgs = arrayOf("${cat.id}")
+        val selectionArgs = arrayOf("${id}")
         val updateRows = db_write.update(
             ContractDB.FeedEntry.TABLE_NAME,
             values,
@@ -127,7 +136,7 @@ class CatProducerWithSql(context: Context) {
         return false
     }
 
-    fun helperClose() {
+    fun startHelperClose() {
         catReaderDbHelper.close()
     }
 

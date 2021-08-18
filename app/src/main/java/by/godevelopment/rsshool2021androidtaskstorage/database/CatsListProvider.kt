@@ -5,9 +5,10 @@ import by.godevelopment.rsshool2021androidtaskstorage.entity.Cat
 import com.github.javafaker.Faker
 
 
-object CatProvider {
+object CatsListProvider {
 
     const val TAG = "catApp"
+
     var catsListSQL: List<Cat> = arrayListOf()
 
     @JvmStatic

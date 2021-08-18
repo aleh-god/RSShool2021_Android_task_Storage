@@ -5,14 +5,21 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.annotation.NonNull
 import androidx.recyclerview.widget.RecyclerView
-import by.godevelopment.rsshool2021androidtaskstorage.database.CatProducerWithSql
-import by.godevelopment.rsshool2021androidtaskstorage.database.CatProvider
 import by.godevelopment.rsshool2021androidtaskstorage.entity.Cat
 import by.godevelopment.rsshool2021androidtaskstorage.databinding.ItemCatBinding
 
 class CatAdapter(
     private val onItemClick: ((position: Int) -> Unit)? = null
 ) : RecyclerView.Adapter<CatAdapter.CatHolder>() {
+
+    private val dataList = mutableListOf<Cat>()
+
+    // Чем передавать List через конструктор, лучше выделить отдельный метод
+    fun setDataList(borrowedItemList: List<Cat>) {
+        this.dataList.clear()
+        this.dataList.addAll(borrowedItemList)
+        notifyDataSetChanged()
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CatHolder {
         return CatHolder(
@@ -22,11 +29,11 @@ class CatAdapter(
     }
 
     override fun onBindViewHolder(holder: CatHolder, position: Int) {
-        val cat = CatProvider.catsListSQL[position]
+        val cat = dataList[position]
         holder.bindTo(cat)
     }
 
-    override fun getItemCount(): Int = CatProvider.catsListSQL.size
+    override fun getItemCount(): Int = dataList.size
 
     class CatHolder(
         @NonNull private val binding: ItemCatBinding,       // Можем передавать что угодно, как само view так и его binding

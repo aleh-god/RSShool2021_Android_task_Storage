@@ -1,18 +1,13 @@
 package by.godevelopment.rsshool2021androidtaskstorage
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import by.godevelopment.rsshool2021androidtaskstorage.adapter.CatAdapter
-import by.godevelopment.rsshool2021androidtaskstorage.database.CatProducerWithSql
-import by.godevelopment.rsshool2021androidtaskstorage.database.CatProvider
-import by.godevelopment.rsshool2021androidtaskstorage.database.ContractDB
+import by.godevelopment.rsshool2021androidtaskstorage.database.SqlBox
 import by.godevelopment.rsshool2021androidtaskstorage.databinding.FragmentFirstBinding
 import by.godevelopment.rsshool2021androidtaskstorage.entity.Cat
 import com.google.android.material.snackbar.Snackbar
@@ -63,7 +58,7 @@ class FirstFragment : Fragment() {
             layoutManager = LinearLayoutManager(context)
             adapter = CatAdapter { position ->
                 myActionClick(dataList[position])
-            }
+            }.apply { setDataList(dataList) }
         }
 
     }
@@ -77,9 +72,8 @@ class FirstFragment : Fragment() {
     }
 
     private fun setupDataList() {
-
-        dataList = CatProvider.catsListSQL
-        Log.i(CatProvider.TAG, "getListOfCats() ${dataList.size}")
+        dataList = SqlBox.catProducerWithSql.getListOfCats()
+        // dataList = CatProvider.catsListSQL
     }
 
     override fun onDestroyView() {
