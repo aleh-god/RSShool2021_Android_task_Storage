@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import by.godevelopment.rsshool2021androidtaskstorage.adapter.CatAdapter
 import by.godevelopment.rsshool2021androidtaskstorage.database.SqlBox
 import by.godevelopment.rsshool2021androidtaskstorage.databinding.FragmentFirstBinding
@@ -54,7 +55,7 @@ class FirstFragment : Fragment() {
 //        recyclerView.layoutManager = linearLayoutManager
 //        recyclerView.adapter = catAdapter
 
-        binding.recyclerView.apply {
+         binding.recyclerView.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = CatAdapter { position ->
                 myActionClick(dataList[position])
@@ -67,6 +68,8 @@ class FirstFragment : Fragment() {
         Snackbar.make(binding.root, "Выбран котик: ${cat.name}", Snackbar.LENGTH_LONG)
             .setAction("Удалить котика") {
                 // Responds to click on the action
+                SqlBox.catProducerWithSql.deleteCatInDataBase(cat.id)
+
             }
             .show()
     }

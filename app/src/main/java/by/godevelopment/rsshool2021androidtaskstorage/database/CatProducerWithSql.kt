@@ -5,7 +5,7 @@ import android.content.Context
 import android.database.Cursor
 import android.provider.BaseColumns
 import android.util.Log
-import by.godevelopment.rsshool2021androidtaskstorage.adapter.OrderType
+import by.godevelopment.rsshool2021androidtaskstorage.entity.OrderType
 import by.godevelopment.rsshool2021androidtaskstorage.entity.Cat
 
 class CatProducerWithSql(context: Context) {
@@ -46,12 +46,12 @@ class CatProducerWithSql(context: Context) {
         }
     }
 
-    fun insertCatInDataBase(cat: Cat): Boolean {
+    fun insertCatInDataBase(name: String, age: Int, breed: String): Boolean {
         // Create a new map of values, where column names are the keys
         val values = ContentValues().apply {
-            put(ContractDB.FeedEntry.COLUMN_NAME_NAME, cat.name)
-            put(ContractDB.FeedEntry.COLUMN_NAME_AGE, cat.age)
-            put(ContractDB.FeedEntry.COLUMN_NAME_BREED, cat.breed)
+            put(ContractDB.FeedEntry.COLUMN_NAME_NAME, name)
+            put(ContractDB.FeedEntry.COLUMN_NAME_AGE, age)
+            put(ContractDB.FeedEntry.COLUMN_NAME_BREED, breed)
         }
 
         // Insert the new row, returning the primary key value of the new row

@@ -80,6 +80,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.menu_main, menu)
+        // TODO "Настроить в других фрагментах"
         return true
     }
 
@@ -89,7 +90,7 @@ class MainActivity : AppCompatActivity() {
         // as you specify a parent activity in AndroidManifest.xml.
         return when (item.itemId) {
             R.id.custom_order -> {
-                findNavController(R.id.nav_host_fragment_content_main).navigate(R.id.ThirdFragment_dest)
+                findNavController(R.id.nav_host_fragment_content_main).navigate(R.id.action_FirstFragment_to_ThirdFragment)
                 true
             }
             R.id.reset_order -> {
