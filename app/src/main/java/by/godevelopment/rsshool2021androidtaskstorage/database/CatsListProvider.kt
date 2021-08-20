@@ -1,9 +1,7 @@
 package by.godevelopment.rsshool2021androidtaskstorage.database
 
-import by.godevelopment.rsshool2021androidtaskstorage.App
 import by.godevelopment.rsshool2021androidtaskstorage.entity.Cat
 import com.github.javafaker.Faker
-
 
 object CatsListProvider {
     @JvmStatic

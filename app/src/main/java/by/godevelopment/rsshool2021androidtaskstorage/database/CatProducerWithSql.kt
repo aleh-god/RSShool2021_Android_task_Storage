@@ -4,19 +4,17 @@ import android.content.ContentValues
 import android.content.Context
 import android.database.Cursor
 import android.provider.BaseColumns
-import android.util.Log
-import by.godevelopment.rsshool2021androidtaskstorage.entity.OrderType
 import by.godevelopment.rsshool2021androidtaskstorage.entity.Cat
+import by.godevelopment.rsshool2021androidtaskstorage.entity.OrderType
 
 class CatProducerWithSql(context: Context) {
 
     private val catReaderDbHelper = CatReaderDbHelper(context.applicationContext)
-    private val db_read = catReaderDbHelper.readableDatabase
-    private val db_write = catReaderDbHelper.writableDatabase
-
+    private val dbRead = catReaderDbHelper.readableDatabase
+    private val dbWrite = catReaderDbHelper.writableDatabase
 
     private fun getCursorWithTopics(): Cursor {
-        return db_read.rawQuery("SELECT * FROM ${ContractDB.FeedEntry.TABLE_NAME}", null)
+        return dbRead.rawQuery("SELECT * FROM ${ContractDB.FeedEntry.TABLE_NAME}", null)
     }
 
     fun getListOfCats(): List<Cat> {
@@ -54,14 +52,11 @@ class CatProducerWithSql(context: Context) {
             put(ContractDB.FeedEntry.COLUMN_NAME_AGE, age)
             put(ContractDB.FeedEntry.COLUMN_NAME_BREED, breed)
         }
-
         // Insert the new row, returning the primary key value of the new row
-        val newRowId = db_write?.insert(ContractDB.FeedEntry.TABLE_NAME, null, values)
+        val newRowId = dbWrite?.insert(ContractDB.FeedEntry.TABLE_NAME, null, values)
 
-        newRowId?.let {
-            Log.i("db_write", "New row $newRowId")
-            return true
-        } ?: return false
+        if (newRowId != null) return true
+        return false
     }
 
     fun getCatFromDataBase(idCat: Int) : Cat {
@@ -79,7 +74,7 @@ class CatProducerWithSql(context: Context) {
         // The values for the WHERE clause
         val selectionArgs = arrayOf("$idCat")
 
-        val cursor = db_read.query(
+        val cursor = dbRead.query(
             ContractDB.FeedEntry.TABLE_NAME,   // The table to query
             projection,             // The array of columns to return (pass null to get all)
             selection,              // The columns for the WHERE clause
@@ -89,16 +84,15 @@ class CatProducerWithSql(context: Context) {
             null               // The sort order
         )
 
-        if (!cursor.moveToFirst()) return Cat(0, "Jesus", 33, "Heaven")
-
-        val id = cursor.getInt(cursor.getColumnIndex(BaseColumns._ID))
-        val name =
-            cursor.getString(cursor.getColumnIndex(ContractDB.FeedEntry.COLUMN_NAME_NAME))
-        val age = cursor.getInt(cursor.getColumnIndex(ContractDB.FeedEntry.COLUMN_NAME_AGE))
-        val breed =
-            cursor.getString(cursor.getColumnIndex(ContractDB.FeedEntry.COLUMN_NAME_BREED))
-        cursor.close()
-        return Cat(id, name, age, breed)
+        if (cursor.moveToFirst()) {
+            val id = cursor.getInt(cursor.getColumnIndex(BaseColumns._ID))
+            val name = cursor.getString(cursor.getColumnIndex(ContractDB.FeedEntry.COLUMN_NAME_NAME))
+            val age = cursor.getInt(cursor.getColumnIndex(ContractDB.FeedEntry.COLUMN_NAME_AGE))
+            val breed = cursor.getString(cursor.getColumnIndex(ContractDB.FeedEntry.COLUMN_NAME_BREED))
+            cursor.close()
+            return Cat(id, name, age, breed)
+        }
+        return Cat(0, "Jesus", 33, "Heaven")
     }
 
     fun deleteCatInDataBase(idCat: Int) : Boolean {
@@ -107,13 +101,12 @@ class CatProducerWithSql(context: Context) {
         // Specify arguments in placeholder order.
         val selectionArgs = arrayOf("$idCat")
         // Issue SQL statement.
-        val deletedRows = db_write.delete(ContractDB.FeedEntry.TABLE_NAME, selection, selectionArgs)
+        val deletedRows = dbWrite.delete(ContractDB.FeedEntry.TABLE_NAME, selection, selectionArgs)
 
         if (deletedRows != 0) return true
         return false
     }
 
-    // TODO "изменить кота на поля-атрибуты"
     fun updateCatInDataBase(id: Int, name: String, age: Int, breed: String): Boolean {
         // New value for one column
         val values = ContentValues().apply {
@@ -126,8 +119,8 @@ class CatProducerWithSql(context: Context) {
         val selection = "${BaseColumns._ID} LIKE ?"
 
         // You may include ?s in the where clause, which will be replaced by the values from whereArgs. The values will be bound as Strings.
-        val selectionArgs = arrayOf("${id}")
-        val updateRows = db_write.update(
+        val selectionArgs = arrayOf("$id")
+        val updateRows = dbWrite.update(
             ContractDB.FeedEntry.TABLE_NAME,
             values,
             selection,
@@ -137,8 +130,7 @@ class CatProducerWithSql(context: Context) {
         return false
     }
 
-    fun startHelperClose() {
+    fun executeSqlHelperClose() {
         catReaderDbHelper.close()
     }
-
 }

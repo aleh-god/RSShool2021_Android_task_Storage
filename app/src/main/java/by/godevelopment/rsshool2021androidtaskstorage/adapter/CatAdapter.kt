@@ -1,6 +1,5 @@
 package by.godevelopment.rsshool2021androidtaskstorage.adapter
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.annotation.NonNull
@@ -42,7 +41,6 @@ class CatAdapter(
 
         init {
             itemView.setOnClickListener {
-                // TODO "Проверить подачу позиции"
                 onItemClick?.invoke(adapterPosition)
             }
         }
@@ -52,8 +50,6 @@ class CatAdapter(
                 Name.text = ("Name cat: ${cat.name}").toString()
                 Age.text = ("Age cat: ${cat.age}").toString()
                 Breed.text = ("Breed cat: ${cat.breed}").toString()
-
-                // Log.i("bindTo", "(*${cat.name}*, ${cat.age}, *${cat.breed}*)")
             }
         }
     }

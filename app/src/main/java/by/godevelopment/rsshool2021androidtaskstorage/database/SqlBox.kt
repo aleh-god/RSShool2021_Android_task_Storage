@@ -13,4 +13,8 @@ object SqlBox {
     fun init(context: Context) {
         catProducerWithSql = CatProducerWithSql(context.applicationContext)
     }
+
+    fun destroy() {
+        catProducerWithSql.executeSqlHelperClose()
+    }
 }

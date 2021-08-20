@@ -1,9 +1,8 @@
 package by.godevelopment.rsshool2021androidtaskstorage
 
 import android.app.Application
-import by.godevelopment.rsshool2021androidtaskstorage.database.CatProducerWithSql
+import androidx.navigation.findNavController
 import by.godevelopment.rsshool2021androidtaskstorage.database.SqlBox
-import by.godevelopment.rsshool2021androidtaskstorage.entity.Cat
 
 class App : Application() {
 

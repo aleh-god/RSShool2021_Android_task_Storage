@@ -15,16 +15,13 @@ class ThirdFragment : Fragment() {
 
     private var _binding: FragmentThirdBinding? = null
 
-    // This property is only valid between onCreateView and
-    // onDestroyView.
+    // This property is only valid between onCreateView and onDestroyView.
     private val binding get() = _binding!!
-
-    private lateinit var dataList: List<Cat>
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentThirdBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -38,20 +35,20 @@ class ThirdFragment : Fragment() {
         binding.headerFilter.text = "Select you order sort."
         binding.NameFilter.setOnClickListener(
             fun(v: View) {
-                findNavController(v).navigate(R.id.action_ThirdFragment_to_FirstFragment)
                 SqlBox.orderList = OrderType.NAME
+                findNavController(v).navigate(R.id.action_ThirdFragment_to_FirstFragment)
             }
         )
         binding.AgeFilter.setOnClickListener(
             fun(v: View) {
-                findNavController(v).navigate(R.id.action_ThirdFragment_to_FirstFragment)
                 SqlBox.orderList = OrderType.AGE
+                findNavController(v).navigate(R.id.action_ThirdFragment_to_FirstFragment)
             }
         )
         binding.BreedFilter.setOnClickListener(
             fun(v: View) {
-                findNavController(v).navigate(R.id.action_ThirdFragment_to_FirstFragment)
                 SqlBox.orderList = OrderType.BREED
+                findNavController(v).navigate(R.id.action_ThirdFragment_to_FirstFragment)
             }
         )
     }

@@ -1,7 +1,6 @@
 package by.godevelopment.rsshool2021androidtaskstorage.database
 
 import android.content.Context
-import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import android.provider.BaseColumns

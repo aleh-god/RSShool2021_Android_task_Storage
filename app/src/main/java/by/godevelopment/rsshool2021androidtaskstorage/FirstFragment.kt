@@ -1,12 +1,11 @@
 package by.godevelopment.rsshool2021androidtaskstorage
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import by.godevelopment.rsshool2021androidtaskstorage.adapter.CatAdapter
 import by.godevelopment.rsshool2021androidtaskstorage.database.SqlBox
 import by.godevelopment.rsshool2021androidtaskstorage.databinding.FragmentFirstBinding
@@ -28,7 +27,7 @@ class FirstFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentFirstBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -44,13 +43,6 @@ class FirstFragment : Fragment() {
     }
 
     private fun setupRecyclerView() {
-
-        // TODO "Обернуть в скоуп функцию"
-//        val linearLayoutManager = LinearLayoutManager(context)
-        //        val recyclerView = binding.recyclerView
-//        recyclerView.layoutManager = linearLayoutManager
-//        recyclerView.adapter = catAdapter
-
         catAdapter = CatAdapter { position ->
             myActionClick(dataList[position])
         }.apply { setDataList(dataList) }
@@ -59,15 +51,12 @@ class FirstFragment : Fragment() {
             layoutManager = LinearLayoutManager(context)
             adapter = catAdapter
         }
-
     }
 
     private fun myActionClick(cat: Cat) {
         Snackbar.make(binding.root, "Выбран котик: ${cat.name}", Snackbar.LENGTH_LONG)
             .setAction("Удалить котика") {
-                // Responds to click on the action
                 SqlBox.catProducerWithSql.deleteCatInDataBase(cat.id)
-                // TODO "обновить адаптер"
                 setupDataList()
                 catAdapter.setDataList(dataList)
             }

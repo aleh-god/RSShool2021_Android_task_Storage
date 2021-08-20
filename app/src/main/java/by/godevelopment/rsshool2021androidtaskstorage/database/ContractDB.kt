@@ -16,6 +16,8 @@ object ContractDB {
         const val COLUMN_NAME_AGE = "age"
         const val COLUMN_NAME_BREED = "breed"
 
+        // Raw query for db:
+
         // DELETE FROM cat_table WHERE id = 1;
         // INSERT INTO cat_table (name, age, breed) VALUES ("Jesus", 33, "Heaven");
         // UPDATE cat_table SET name = 'Pluton' WHERE ID = 33;
