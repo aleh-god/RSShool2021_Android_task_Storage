@@ -11,6 +11,7 @@ import by.godevelopment.rsshool2021androidtaskstorage.adapter.CatAdapter
 import by.godevelopment.rsshool2021androidtaskstorage.database.SqlBox
 import by.godevelopment.rsshool2021androidtaskstorage.databinding.FragmentFirstBinding
 import by.godevelopment.rsshool2021androidtaskstorage.entity.Cat
+import by.godevelopment.rsshool2021androidtaskstorage.entity.OrderType
 import com.google.android.material.snackbar.Snackbar
 
 /**
@@ -74,8 +75,12 @@ class FirstFragment : Fragment() {
     }
 
     private fun setupDataList() {
-        dataList = SqlBox.catProducerWithSql.getListOfCats()
-        // dataList = CatProvider.catsListSQL
+        dataList = when (SqlBox.orderList) {
+            OrderType.ID -> SqlBox.catProducerWithSql.getListOfCats()
+            OrderType.NAME -> SqlBox.catProducerWithSql.getSortedListOfCats(OrderType.NAME)
+            OrderType.AGE -> SqlBox.catProducerWithSql.getSortedListOfCats(OrderType.AGE)
+            OrderType.BREED -> SqlBox.catProducerWithSql.getSortedListOfCats(OrderType.BREED)
+        }
     }
 
     override fun onDestroyView() {

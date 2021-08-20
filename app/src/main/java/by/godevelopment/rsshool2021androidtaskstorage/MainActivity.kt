@@ -10,8 +10,10 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
+import by.godevelopment.rsshool2021androidtaskstorage.database.SqlBox
 import by.godevelopment.rsshool2021androidtaskstorage.databinding.ActivityMainBinding
 import by.godevelopment.rsshool2021androidtaskstorage.entity.Cat
+import by.godevelopment.rsshool2021androidtaskstorage.entity.OrderType
 
 class MainActivity : AppCompatActivity() {
 
@@ -57,15 +59,14 @@ class MainActivity : AppCompatActivity() {
         val stringDestFirst = resources.getString(R.string.first_fragment_label)
         val stringDestSecond = resources.getString(R.string.second_fragment_label)
         val stringDestThird = resources.getString(R.string.third_fragment_label)
-        val label = findNavController(R.id.nav_host_fragment_content_main).currentDestination?.label.toString()
 
-        when (label) {
+        when (findNavController(R.id.nav_host_fragment_content_main).currentDestination?.label.toString()) {
             stringDestFirst ->
             {
                 binding.fab.setImageResource(android.R.drawable.ic_input_add)
                 binding.fab.show()
                 binding.toolbar.menu.setGroupVisible(R.id.main_menu_group, true)
-                binding.fab.setOnClickListener { _ ->
+                binding.fab.setOnClickListener {
                     findNavController(R.id.nav_host_fragment_content_main).navigate(R.id.action_FirstFragment_to_SecondFragment)
                 }
             }
@@ -74,7 +75,7 @@ class MainActivity : AppCompatActivity() {
                 binding.fab.setImageResource(R.drawable.ic_arrow_back_24)
                 binding.fab.show()
                 binding.toolbar.menu.setGroupVisible(R.id.main_menu_group, false)
-                binding.fab.setOnClickListener { _ ->
+                binding.fab.setOnClickListener {
                     findNavController(R.id.nav_host_fragment_content_main).navigate(R.id.action_SecondFragment_to_FirstFragment)
                 }
             }
@@ -101,10 +102,8 @@ class MainActivity : AppCompatActivity() {
                 true
             }
             R.id.reset_order -> {
-                Toast.makeText(
-                    this@MainActivity,
-                    "Сброс фильтра. Перегрузка листа с данными", Toast.LENGTH_SHORT
-                ).show()
+                SqlBox.orderList = OrderType.ID
+                findNavController(R.id.nav_host_fragment_content_main).navigate(R.id.action_FirstFragment_to_WaitFragment)
                 true
             }
             else -> super.onOptionsItemSelected(item)

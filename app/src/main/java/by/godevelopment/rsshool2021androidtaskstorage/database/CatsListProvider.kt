@@ -6,11 +6,6 @@ import com.github.javafaker.Faker
 
 
 object CatsListProvider {
-
-    const val TAG = "catApp"
-
-    var catsListSQL: List<Cat> = arrayListOf()
-
     @JvmStatic
     val catsList: List<Cat> = (1..30).map { Cat(
         id = it,
@@ -18,9 +13,4 @@ object CatsListProvider {
         age = Faker.instance().number().numberBetween(1,20),
         breed = Faker.instance().cat().breed()
     ) }
-
-    fun setCatsList(list: List<Cat>) {
-        catsListSQL = list
-    }
-
 }

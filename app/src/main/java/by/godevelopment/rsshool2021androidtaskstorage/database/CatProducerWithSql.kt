@@ -40,6 +40,7 @@ class CatProducerWithSql(context: Context) {
 
     fun getSortedListOfCats(order: OrderType): List<Cat> {
         return when (order) {
+            OrderType.ID -> getListOfCats()
             OrderType.NAME -> getListOfCats().sortedBy { Cat -> Cat.name }
             OrderType.AGE -> getListOfCats().sortedBy { Cat -> Cat.age }
             OrderType.BREED -> getListOfCats().sortedBy { Cat -> Cat.breed }

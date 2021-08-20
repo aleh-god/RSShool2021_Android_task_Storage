@@ -6,8 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation.findNavController
+import by.godevelopment.rsshool2021androidtaskstorage.database.SqlBox
 import by.godevelopment.rsshool2021androidtaskstorage.databinding.FragmentThirdBinding
 import by.godevelopment.rsshool2021androidtaskstorage.entity.Cat
+import by.godevelopment.rsshool2021androidtaskstorage.entity.OrderType
 
 class ThirdFragment : Fragment() {
 
@@ -37,19 +39,19 @@ class ThirdFragment : Fragment() {
         binding.NameFilter.setOnClickListener(
             fun(v: View) {
                 findNavController(v).navigate(R.id.action_ThirdFragment_to_FirstFragment)
-                // Do something in response to button click
+                SqlBox.orderList = OrderType.NAME
             }
         )
         binding.AgeFilter.setOnClickListener(
             fun(v: View) {
                 findNavController(v).navigate(R.id.action_ThirdFragment_to_FirstFragment)
-                // Do something in response to button click
+                SqlBox.orderList = OrderType.AGE
             }
         )
         binding.BreedFilter.setOnClickListener(
             fun(v: View) {
                 findNavController(v).navigate(R.id.action_ThirdFragment_to_FirstFragment)
-                // Do something in response to button click
+                SqlBox.orderList = OrderType.BREED
             }
         )
     }
