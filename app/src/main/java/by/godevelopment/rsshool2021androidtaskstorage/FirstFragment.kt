@@ -19,12 +19,10 @@ import com.google.android.material.snackbar.Snackbar
 class FirstFragment : Fragment() {
 
     private var _binding: FragmentFirstBinding? = null
-
-    // This property is only valid between onCreateView and
-    // onDestroyView.
-    private val binding get() = _binding!!
+    private val binding get() = _binding!!  // This property is only valid between onCreateView and onDestroyView.
 
     private lateinit var dataList: List<Cat>
+    private lateinit var catAdapter: CatAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -48,18 +46,17 @@ class FirstFragment : Fragment() {
 
         // TODO "Обернуть в скоуп функцию"
 //        val linearLayoutManager = LinearLayoutManager(context)
-//        val catAdapter = CatAdapter { position ->
-//            myActionClick(dataList[position])
-//        }
-//        val recyclerView = binding.recyclerView
+        //        val recyclerView = binding.recyclerView
 //        recyclerView.layoutManager = linearLayoutManager
 //        recyclerView.adapter = catAdapter
 
-         binding.recyclerView.apply {
+        catAdapter = CatAdapter { position ->
+            myActionClick(dataList[position])
+        }.apply { setDataList(dataList) }
+
+        binding.recyclerView.apply {
             layoutManager = LinearLayoutManager(context)
-            adapter = CatAdapter { position ->
-                myActionClick(dataList[position])
-            }.apply { setDataList(dataList) }
+            adapter = catAdapter
         }
 
     }
@@ -69,7 +66,9 @@ class FirstFragment : Fragment() {
             .setAction("Удалить котика") {
                 // Responds to click on the action
                 SqlBox.catProducerWithSql.deleteCatInDataBase(cat.id)
-
+                // TODO "обновить адаптер"
+                setupDataList()
+                catAdapter.setDataList(dataList)
             }
             .show()
     }

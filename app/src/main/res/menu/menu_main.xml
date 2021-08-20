@@ -2,6 +2,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="by.godevelopment.rsshool2021androidtaskstorage.MainActivity">
+
+    <group
+        android:id="@+id/main_menu_group">
     <item
         android:id="@+id/custom_order"
         android:orderInCategory="100"
@@ -15,4 +18,5 @@
         android:title="@string/reset_order"
         app:showAsAction="never"
         />
+    </group>
 </menu>

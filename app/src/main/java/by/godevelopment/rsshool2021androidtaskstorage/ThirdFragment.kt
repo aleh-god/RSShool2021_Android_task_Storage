@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation.findNavController
-import androidx.navigation.findNavController
 import by.godevelopment.rsshool2021androidtaskstorage.databinding.FragmentThirdBinding
 import by.godevelopment.rsshool2021androidtaskstorage.entity.Cat
 

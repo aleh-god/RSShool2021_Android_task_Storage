@@ -18,10 +18,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
 
-    // private lateinit var catProducer: CatProducerWithSql
-
     private val destinationListener =
-        NavController.OnDestinationChangedListener { _, _, _ -> setupGoToButton() }
+        NavController.OnDestinationChangedListener { _, _, _ -> setupFabAndToolbar() }
 
     private lateinit var dataList: List<Cat>
 
@@ -38,7 +36,7 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(binding.toolbar)
 
         setupNavigation()
-        setupGoToButton()
+        setupFabAndToolbar()
         setupDataBase()
     }
 
@@ -51,28 +49,38 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupDataBase() {
-        // catProducer = CatProducerWithSql(applicationContext)
-        // CatProvider.setCatsList(catProducer.getListOfCats())
-
+        // TODO "Удалить метод"
     }
 
-    private fun setupGoToButton() {
+    private fun setupFabAndToolbar() {
 
         val stringDestFirst = resources.getString(R.string.first_fragment_label)
         val stringDestSecond = resources.getString(R.string.second_fragment_label)
+        val stringDestThird = resources.getString(R.string.third_fragment_label)
         val label = findNavController(R.id.nav_host_fragment_content_main).currentDestination?.label.toString()
 
-        if ( label == stringDestFirst) {
-            binding.fab.setImageResource(android.R.drawable.ic_input_add)
-            binding.fab.setOnClickListener { _ ->
-                findNavController(R.id.nav_host_fragment_content_main).navigate(R.id.action_FirstFragment_to_SecondFragment)
+        when (label) {
+            stringDestFirst ->
+            {
+                binding.fab.setImageResource(android.R.drawable.ic_input_add)
+                binding.fab.show()
+                binding.toolbar.menu.setGroupVisible(R.id.main_menu_group, true)
+                binding.fab.setOnClickListener { _ ->
+                    findNavController(R.id.nav_host_fragment_content_main).navigate(R.id.action_FirstFragment_to_SecondFragment)
+                }
             }
-        }
-        if (label == stringDestSecond) {
-
-            binding.fab.setImageResource(R.drawable.ic_arrow_back_24)
-            binding.fab.setOnClickListener { _ ->
-                findNavController(R.id.nav_host_fragment_content_main).navigate(R.id.action_SecondFragment_to_FirstFragment)
+            stringDestSecond ->
+            {
+                binding.fab.setImageResource(R.drawable.ic_arrow_back_24)
+                binding.fab.show()
+                binding.toolbar.menu.setGroupVisible(R.id.main_menu_group, false)
+                binding.fab.setOnClickListener { _ ->
+                    findNavController(R.id.nav_host_fragment_content_main).navigate(R.id.action_SecondFragment_to_FirstFragment)
+                }
+            }
+            stringDestThird -> {
+                binding.fab.hide()
+                binding.toolbar.menu.setGroupVisible(R.id.main_menu_group, false)
             }
         }
     }
@@ -80,7 +88,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.menu_main, menu)
-        // TODO "Настроить в других фрагментах"
         return true
     }
 
@@ -95,7 +102,7 @@ class MainActivity : AppCompatActivity() {
             }
             R.id.reset_order -> {
                 Toast.makeText(
-                    this,
+                    this@MainActivity,
                     "Сброс фильтра. Перегрузка листа с данными", Toast.LENGTH_SHORT
                 ).show()
                 true
@@ -113,6 +120,6 @@ class MainActivity : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
         findNavController(R.id.nav_host_fragment_content_main).removeOnDestinationChangedListener(destinationListener)
-        // catProducer.helperClose()
+        // TODO "Отвязать объект БД"
     }
 }

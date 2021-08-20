@@ -2,9 +2,9 @@
     <string name="app_name">RSShool2021 Android task Storage</string>
     <string name="action_settings">Settings</string>
     <!-- Strings used for fragments for navigation -->
-    <string name="first_fragment_label">First Fragment</string>
-    <string name="second_fragment_label">Second Fragment</string>
-    <string name="third_fragment_label">Third Fragment</string>
+    <string name="first_fragment_label">Cats list</string>
+    <string name="second_fragment_label">Add new cat</string>
+    <string name="third_fragment_label">Sort cats list by</string>
 
     <string name="next">Next</string>
     <string name="previous">Previous</string>
