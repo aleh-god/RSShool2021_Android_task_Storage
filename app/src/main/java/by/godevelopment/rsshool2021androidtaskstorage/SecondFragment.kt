@@ -38,22 +38,22 @@ class SecondFragment : Fragment() {
             var chek = true
 
             if (name.isNullOrBlank()) {
-                binding.Name.error = "Даже у бездомного котика есть имя!"
+                binding.Name.error = "Even a homeless cat has a name!"
                 chek = false
             }
             if (breed.isNullOrBlank()) {
-                binding.Breed.error = "У нас только породистые котики!"
+                binding.Breed.error = "We have only purebred cats!"
                 chek = false
             }
             val wtfChek = age != null && age in 1..33
             if (!wtfChek) {
-                binding.Age.error = "Котики столько неживут!"
+                binding.Age.error = "Cats are not live so long!"
                 chek = false
             }
-            if (!chek) Snackbar.make(binding.root, "Заполните поля правильно.", Snackbar.LENGTH_LONG).show()
+            if (!chek) Snackbar.make(binding.root, "Please fill in the fields correctly.", Snackbar.LENGTH_LONG).show()
             else if (SqlBox.catProducerWithSql.insertCatInDataBase(name.toString(), age!!, breed.toString()))
                 findNavController().navigate(R.id.action_SecondFragment_to_FirstFragment)
-            else Snackbar.make(binding.root, "Котик не хочет в базу данных. Попробуйте снова.", Snackbar.LENGTH_LONG).show()
+            else Snackbar.make(binding.root, "Cat doesn't want to go to the database. Try again.", Snackbar.LENGTH_LONG).show()
         }
     }
 

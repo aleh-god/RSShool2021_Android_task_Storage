@@ -54,8 +54,8 @@ class FirstFragment : Fragment() {
     }
 
     private fun myActionClick(cat: Cat) {
-        Snackbar.make(binding.root, "Выбран котик: ${cat.name}", Snackbar.LENGTH_LONG)
-            .setAction("Удалить котика") {
+        Snackbar.make(binding.root, "Selected cat: ${cat.name}", Snackbar.LENGTH_LONG)
+            .setAction("Remove cat") {
                 SqlBox.catProducerWithSql.deleteCatInDataBase(cat.id)
                 setupDataList()
                 catAdapter.setDataList(dataList)
