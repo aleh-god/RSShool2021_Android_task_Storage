@@ -18,8 +18,6 @@ class MainActivity : AppCompatActivity() {
 
     // TODO "Почистить сам стиль"
     // TODO "Почистить макеты, перенести в стиль"
-    // TODO "Сортировка без учета регистра"
-    // TODO "Выход по кнопке назад"
     // TODO ""
 
     private lateinit var appBarConfiguration: AppBarConfiguration

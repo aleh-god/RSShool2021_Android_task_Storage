@@ -9,14 +9,20 @@
         android:id="@+id/FirstFragment_dest"
         android:name="by.godevelopment.rsshool2021androidtaskstorage.FirstFragment"
         android:label="@string/first_fragment_label"
-        tools:layout="@layout/fragment_first">
+        tools:layout="@layout/fragment_first"
+        app:defaultNavHost="false"
+        >
 
         <action
             android:id="@+id/action_FirstFragment_to_SecondFragment"
-            app:destination="@id/SecondFragment_dest" />
+            app:destination="@id/SecondFragment_dest"
+
+            />
         <action
             android:id="@+id/action_FirstFragment_to_ThirdFragment"
-            app:destination="@id/ThirdFragment_dest" />
+            app:destination="@id/ThirdFragment_dest"
+
+            />
     </fragment>
 
     <fragment
