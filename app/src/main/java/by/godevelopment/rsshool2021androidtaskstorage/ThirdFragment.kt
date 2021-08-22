@@ -10,6 +10,7 @@ import by.godevelopment.rsshool2021androidtaskstorage.database.SqlBox
 import by.godevelopment.rsshool2021androidtaskstorage.databinding.FragmentThirdBinding
 import by.godevelopment.rsshool2021androidtaskstorage.entity.Cat
 import by.godevelopment.rsshool2021androidtaskstorage.entity.OrderType
+import com.google.android.material.snackbar.Snackbar
 
 class ThirdFragment : Fragment() {
 
@@ -32,25 +33,22 @@ class ThirdFragment : Fragment() {
     }
 
     private fun setup() {
-        binding.headerFilter.text = "Select you order sort."
-        binding.NameFilter.setOnClickListener(
-            fun(v: View) {
-                SqlBox.orderList = OrderType.NAME
-                findNavController(v).navigate(R.id.action_ThirdFragment_to_FirstFragment)
-            }
-        )
-        binding.AgeFilter.setOnClickListener(
-            fun(v: View) {
-                SqlBox.orderList = OrderType.AGE
-                findNavController(v).navigate(R.id.action_ThirdFragment_to_FirstFragment)
-            }
-        )
-        binding.BreedFilter.setOnClickListener(
-            fun(v: View) {
-                SqlBox.orderList = OrderType.BREED
-                findNavController(v).navigate(R.id.action_ThirdFragment_to_FirstFragment)
-            }
-        )
+        binding.headerOrder.text = "Select you order sort."
+
+        binding.nameOrder.setOnClickListener { chekButtonAndAction(it) }
+        binding.ageOrder.setOnClickListener { chekButtonAndAction(it) }
+        binding.breedOrder.setOnClickListener { chekButtonAndAction(it) }
+        binding.resetOrder.setOnClickListener { chekButtonAndAction(it) }
+    }
+
+    private fun chekButtonAndAction(v: View) {
+        when (v.id) {
+            binding.nameOrder.id -> SqlBox.orderList = OrderType.NAME
+            binding.ageOrder.id -> SqlBox.orderList = OrderType.AGE
+            binding.breedOrder.id -> SqlBox.orderList = OrderType.BREED
+            binding.resetOrder.id -> SqlBox.orderList = OrderType.ID
+        }
+        findNavController(v).navigate(R.id.action_ThirdFragment_to_FirstFragment)
     }
 
     override fun onDestroyView() {

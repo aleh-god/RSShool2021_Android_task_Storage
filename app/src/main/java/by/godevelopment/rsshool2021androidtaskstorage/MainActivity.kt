@@ -16,6 +16,13 @@ import by.godevelopment.rsshool2021androidtaskstorage.entity.OrderType
 
 class MainActivity : AppCompatActivity() {
 
+    // TODO "Почистить сам стиль"
+    // TODO "Почистить макеты, перенести в стиль"
+    // TODO "Сортировка без учета регистра"
+    // TODO "Выход по кнопке назад"
+    // TODO ""
+    // TODO ""
+
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
     private val destinationListener = NavController.OnDestinationChangedListener {

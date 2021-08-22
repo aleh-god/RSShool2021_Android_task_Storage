@@ -7,7 +7,7 @@
     tools:context=".ThirdFragment">
 
     <TextView
-        android:id="@+id/header_filter"
+        android:id="@+id/header_order"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/select_order"
@@ -15,44 +15,63 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/Name_filter"
+        app:layout_constraintBottom_toTopOf="@id/name_order"
         app:layout_constraintVertical_chainStyle="packed"
         />
 
     <Button
-        android:id="@+id/Name_filter"
+        android:id="@+id/name_order"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="3dp"
         android:text="@string/cat_name"
-        app:layout_constraintTop_toBottomOf="@id/header_filter"
-        app:layout_constraintBottom_toTopOf="@id/Age_filter"
+        app:layout_constraintTop_toBottomOf="@id/header_order"
+        app:layout_constraintBottom_toTopOf="@id/age_order"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         />
 
     <Button
-        android:id="@+id/Age_filter"
+        android:id="@+id/age_order"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="3dp"
         android:text="@string/cate_age"
-        app:layout_constraintTop_toBottomOf="@id/Name_filter"
-        app:layout_constraintBottom_toTopOf="@id/Breed_filter"
+        app:layout_constraintTop_toBottomOf="@id/name_order"
+        app:layout_constraintBottom_toTopOf="@id/breed_order"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         />
 
     <Button
-        android:id="@+id/Breed_filter"
+        android:id="@+id/breed_order"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="3dp"
         android:text="@string/cat_breed"
-        app:layout_constraintTop_toBottomOf="@id/Age_filter"
+        app:layout_constraintTop_toBottomOf="@id/age_order"
+        app:layout_constraintBottom_toTopOf="@id/reset_order"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+
+    <Button
+        android:id="@+id/reset_order"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="3dp"
+        android:backgroundTint="@color/red"
+        android:text="@string/reset_order"
+        app:layout_constraintTop_toBottomOf="@id/breed_order"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/left_line"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
