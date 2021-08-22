@@ -9,17 +9,20 @@
         android:id="@+id/FirstFragment_dest"
         android:name="by.godevelopment.rsshool2021androidtaskstorage.FirstFragment"
         android:label="@string/first_fragment_label"
-        tools:layout="@layout/fragment_first">
+        tools:layout="@layout/fragment_first"
+        app:defaultNavHost="false"
+        >
 
         <action
             android:id="@+id/action_FirstFragment_to_SecondFragment"
-            app:destination="@id/SecondFragment_dest" />
+            app:destination="@id/SecondFragment_dest"
+
+            />
         <action
             android:id="@+id/action_FirstFragment_to_ThirdFragment"
-            app:destination="@id/ThirdFragment_dest" />
-        <action
-            android:id="@+id/action_FirstFragment_to_WaitFragment"
-            app:destination="@id/Wait_dest" />
+            app:destination="@id/ThirdFragment_dest"
+
+            />
     </fragment>
 
     <fragment
@@ -44,14 +47,4 @@
             app:destination="@id/FirstFragment_dest" />
     </fragment>
 
-    <fragment
-        android:id="@+id/Wait_dest"
-        android:name="by.godevelopment.rsshool2021androidtaskstorage.WaitFragment"
-        android:label="@string/wait_fragment_label"
-        tools:layout="@layout/fragment_wait">
-
-        <action
-            android:id="@+id/action_WaitFragment_to_FirstFragment"
-            app:destination="@id/FirstFragment_dest" />
-    </fragment>
 </navigation>
