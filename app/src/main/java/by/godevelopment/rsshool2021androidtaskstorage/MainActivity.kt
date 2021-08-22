@@ -21,7 +21,6 @@ class MainActivity : AppCompatActivity() {
     // TODO "Сортировка без учета регистра"
     // TODO "Выход по кнопке назад"
     // TODO ""
-    // TODO ""
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
