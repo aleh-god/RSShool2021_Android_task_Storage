@@ -97,11 +97,6 @@ class MainActivity : AppCompatActivity() {
                 findNavController(R.id.nav_host_fragment_content_main).navigate(R.id.action_FirstFragment_to_ThirdFragment)
                 true
             }
-            R.id.reset_order -> {
-                SqlBox.orderList = OrderType.ID
-                findNavController(R.id.nav_host_fragment_content_main).navigate(R.id.action_FirstFragment_to_WaitFragment)
-                true
-            }
             else -> super.onOptionsItemSelected(item)
         }
     }
