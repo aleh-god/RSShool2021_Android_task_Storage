@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import by.godevelopment.rsshool2021androidtaskstorage.adapter.CatAdapter
@@ -23,6 +24,17 @@ class FirstFragment : Fragment() {
 
     private lateinit var dataList: List<Cat>
     private lateinit var catAdapter: CatAdapter
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        // This callback will only be called when MyFragment is at least Started.
+        val callback = requireActivity().onBackPressedDispatcher.addCallback(this) {
+            activity?.moveTaskToBack(true)
+        }
+        // The callback can be enabled or disabled here or in the lambda
+        callback.isEnabled
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

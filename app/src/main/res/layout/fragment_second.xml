@@ -4,33 +4,28 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SecondFragment">
+    tools:context=".SecondFragment"
+    >
 
     <EditText
         android:id="@+id/Name"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="3dp"
+        style="@style/my_style_storage"
         android:autofillHints="name"
-        android:gravity="center"
-        android:inputType="text"
-        android:minHeight="48dp"
         android:hint="@string/cat_name"
+        android:inputType="text"
         app:layout_constraintBottom_toTopOf="@id/Age"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_chainStyle="packed" />
+        app:layout_constraintVertical_chainStyle="packed"
+        />
 
     <EditText
         android:id="@+id/Age"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="3dp"
+        style="@style/my_style_storage"
         android:autofillHints="age"
         android:gravity="center"
         android:inputType="number"
-        android:minHeight="48dp"
         android:hint="@string/cate_age"
         app:layout_constraintBottom_toTopOf="@id/Breed"
         app:layout_constraintEnd_toEndOf="parent"
@@ -39,23 +34,21 @@
 
     <EditText
         android:id="@+id/Breed"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="3dp"
-        android:autofillHints="breed"
-        android:gravity="center"
-        android:inputType="text"
-        android:minHeight="48dp"
+        style="@style/my_style_storage"
         android:hint="@string/cat_breed"
+        android:autofillHints = "breed"
+        android:inputType="text"
         app:layout_constraintBottom_toBottomOf="@id/button_second"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/Age" />
+        app:layout_constraintTop_toBottomOf="@id/Age"
+        />
 
     <Button
         android:id="@+id/button_second"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_margin="3dp"
         android:text="@string/add_new_cat"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
