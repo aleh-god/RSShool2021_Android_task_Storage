@@ -10,7 +10,6 @@
         android:name="by.godevelopment.rsshool2021androidtaskstorage.FirstFragment"
         android:label="@string/first_fragment_label"
         tools:layout="@layout/fragment_first"
-        app:defaultNavHost="false"
         >
 
         <action
