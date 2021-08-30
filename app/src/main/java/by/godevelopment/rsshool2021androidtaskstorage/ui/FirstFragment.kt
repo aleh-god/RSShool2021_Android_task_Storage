@@ -1,4 +1,4 @@
-package by.godevelopment.rsshool2021androidtaskstorage
+package by.godevelopment.rsshool2021androidtaskstorage.ui
 
 import android.os.Bundle
 import android.view.LayoutInflater

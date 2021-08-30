@@ -1,62 +1,94 @@
-package by.godevelopment.rsshool2021androidtaskstorage.database
+package by.godevelopment.rsshool2021androidtaskstorage.database.sql
 
 import android.content.ContentValues
 import android.content.Context
 import android.database.Cursor
-import android.provider.BaseColumns
+import android.util.Log
+import by.godevelopment.rsshool2021androidtaskstorage.database.room.CatDao
 import by.godevelopment.rsshool2021androidtaskstorage.entity.Cat
-import by.godevelopment.rsshool2021androidtaskstorage.entity.OrderType
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOf
 
-class CatProducerWithSql(context: Context) {
+class CatDaoSqlImplementation(context: Context) : CatDao {
 
     private val catReaderDbHelper = CatReaderDbHelper(context.applicationContext)
     private val dbRead = catReaderDbHelper.readableDatabase
     private val dbWrite = catReaderDbHelper.writableDatabase
 
-    private fun getCursorWithTopics(): Cursor {
-        return dbRead.rawQuery("SELECT * FROM ${ContractDB.FeedEntry.TABLE_NAME}", null)
-    }
+    override fun getAll(): Flow<List<Cat>> {
 
-    fun getListOfCats(): List<Cat> {
-        val listOfTopics = mutableListOf<Cat>()
-        getCursorWithTopics().use { cursor ->
+        val cursor : Cursor = dbRead.rawQuery("SELECT * FROM ${ContractDB.FeedEntry.TABLE_NAME}", null)
+        val listOfResult = mutableListOf<Cat>()
+
+        cursor.use { cursor ->
             if (cursor.moveToFirst()) {
                 do {
-                    val id = cursor.getInt(cursor.getColumnIndex(BaseColumns._ID))
+                    val id = cursor.getInt(cursor.getColumnIndex(ContractDB.FeedEntry.COLUMN_NAME_ID))
                     val name =
                         cursor.getString(cursor.getColumnIndex(ContractDB.FeedEntry.COLUMN_NAME_NAME))
                     val age = cursor.getInt(cursor.getColumnIndex(ContractDB.FeedEntry.COLUMN_NAME_AGE))
                     val breed =
                         cursor.getString(cursor.getColumnIndex(ContractDB.FeedEntry.COLUMN_NAME_BREED))
-                    listOfTopics.add(Cat(id, name, age, breed))
+                    listOfResult.add(Cat(id, name, age, breed))
                 } while (cursor.moveToNext())
             }
             cursor.close()
         }
-        return ArrayList(listOfTopics)
+        return flowOf(listOfResult)
     }
 
-    fun getSortedListOfCats(order: OrderType): List<Cat> {
-        return when (order) {
-            OrderType.ID -> getListOfCats()
-            OrderType.NAME -> getListOfCats().sortedBy { Cat -> Cat.name.lowercase() }
-            OrderType.AGE -> getListOfCats().sortedBy { Cat -> Cat.age }
-            OrderType.BREED -> getListOfCats().sortedBy { Cat -> Cat.breed.lowercase() }
-        }
+    override suspend fun deleteAll() {
+        dbRead.rawQuery("DELETE FROM ${ContractDB.FeedEntry.TABLE_NAME}", null)
     }
 
-    fun insertCatInDataBase(name: String, age: Int, breed: String): Boolean {
+    override suspend fun insertCat(cat: Cat) {
+
         // Create a new map of values, where column names are the keys
         val values = ContentValues().apply {
-            put(ContractDB.FeedEntry.COLUMN_NAME_NAME, name)
-            put(ContractDB.FeedEntry.COLUMN_NAME_AGE, age)
-            put(ContractDB.FeedEntry.COLUMN_NAME_BREED, breed)
+            put(ContractDB.FeedEntry.COLUMN_NAME_NAME, cat.name)
+            put(ContractDB.FeedEntry.COLUMN_NAME_AGE, cat.age)
+            put(ContractDB.FeedEntry.COLUMN_NAME_BREED, cat.breed)
         }
         // Insert the new row, returning the primary key value of the new row
         val newRowId = dbWrite?.insert(ContractDB.FeedEntry.TABLE_NAME, null, values)
 
-        if (newRowId != null) return true
-        return false
+        if (newRowId != 0L) Log.i("DAO", "Insert cat complete.")
+        else Log.i("DAO", "ERROR insert cat!!!")
+    }
+
+    override suspend fun updateCat(cat: Cat) {
+        // New value for one column
+        val values = ContentValues().apply {
+            put(ContractDB.FeedEntry.COLUMN_NAME_NAME, cat.name)
+            put(ContractDB.FeedEntry.COLUMN_NAME_AGE, cat.age)
+            put(ContractDB.FeedEntry.COLUMN_NAME_BREED, cat.breed)
+        }
+
+        // Which row to update, based on the title
+        val selection = "${ContractDB.FeedEntry.COLUMN_NAME_ID} LIKE ?"
+
+        // You may include ?s in the where clause, which will be replaced by the values from whereArgs. The values will be bound as Strings.
+        val selectionArgs = arrayOf("${cat.id}")
+        val updateRows = dbWrite.update(
+            ContractDB.FeedEntry.TABLE_NAME,
+            values,
+            selection,
+            selectionArgs)
+
+        if (updateRows != 0) Log.i("DAO", "Update cat complete.")
+        else Log.i("DAO", "ERROR update cat!!!")
+    }
+
+    override suspend fun deleteCat(cat: Cat) {
+            // Define 'where' part of query.
+            val selection = "${ContractDB.FeedEntry.COLUMN_NAME_ID} LIKE ?"
+            // Specify arguments in placeholder order.
+            val selectionArgs = arrayOf("${cat.id}")
+            // Issue SQL statement.
+            val deletedRows = dbWrite.delete(ContractDB.FeedEntry.TABLE_NAME, selection, selectionArgs)
+
+            if (deletedRows != 0) Log.i("DAO", "Delete cat complete.")
+            else Log.i("DAO", "ERROR delete cat!!!")
     }
 
     fun getCatFromDataBase(idCat: Int) : Cat {
@@ -70,7 +102,7 @@ class CatProducerWithSql(context: Context) {
         // Это делает ваши операторы выбора невосприимчивыми к SQL-инъекции.
 
         // The columns for the WHERE clause
-        val selection = "${BaseColumns._ID} = ?"
+        val selection = "${ContractDB.FeedEntry.COLUMN_NAME_ID} = ?"
         // The values for the WHERE clause
         val selectionArgs = arrayOf("$idCat")
 
@@ -85,7 +117,7 @@ class CatProducerWithSql(context: Context) {
         )
 
         if (cursor.moveToFirst()) {
-            val id = cursor.getInt(cursor.getColumnIndex(BaseColumns._ID))
+            val id = cursor.getInt(cursor.getColumnIndex(ContractDB.FeedEntry.COLUMN_NAME_ID))
             val name = cursor.getString(cursor.getColumnIndex(ContractDB.FeedEntry.COLUMN_NAME_NAME))
             val age = cursor.getInt(cursor.getColumnIndex(ContractDB.FeedEntry.COLUMN_NAME_AGE))
             val breed = cursor.getString(cursor.getColumnIndex(ContractDB.FeedEntry.COLUMN_NAME_BREED))
@@ -95,42 +127,8 @@ class CatProducerWithSql(context: Context) {
         return Cat(0, "Jesus", 33, "Heaven")
     }
 
-    fun deleteCatInDataBase(idCat: Int) : Boolean {
-        // Define 'where' part of query.
-        val selection = "${BaseColumns._ID} LIKE ?"
-        // Specify arguments in placeholder order.
-        val selectionArgs = arrayOf("$idCat")
-        // Issue SQL statement.
-        val deletedRows = dbWrite.delete(ContractDB.FeedEntry.TABLE_NAME, selection, selectionArgs)
-
-        if (deletedRows != 0) return true
-        return false
-    }
-
-    fun updateCatInDataBase(id: Int, name: String, age: Int, breed: String): Boolean {
-        // New value for one column
-        val values = ContentValues().apply {
-            put(ContractDB.FeedEntry.COLUMN_NAME_NAME, name)
-            put(ContractDB.FeedEntry.COLUMN_NAME_AGE, age)
-            put(ContractDB.FeedEntry.COLUMN_NAME_BREED, breed)
-        }
-
-        // Which row to update, based on the title
-        val selection = "${BaseColumns._ID} LIKE ?"
-
-        // You may include ?s in the where clause, which will be replaced by the values from whereArgs. The values will be bound as Strings.
-        val selectionArgs = arrayOf("$id")
-        val updateRows = dbWrite.update(
-            ContractDB.FeedEntry.TABLE_NAME,
-            values,
-            selection,
-            selectionArgs)
-
-        if (updateRows != 0) return true
-        return false
-    }
-
     fun executeSqlHelperClose() {
         catReaderDbHelper.close()
     }
+
 }

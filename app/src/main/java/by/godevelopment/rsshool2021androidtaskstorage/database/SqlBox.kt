@@ -7,14 +7,17 @@ object SqlBox {
 
     var orderList: OrderType = OrderType.ID
 
-    lateinit var catProducerWithSql: CatProducerWithSql
-        private set
+    /*
+lateinit var catProducerWithSql: CatProducerWithSql
+    private set
 
-    fun init(context: Context) {
-        catProducerWithSql = CatProducerWithSql(context.applicationContext)
-    }
+fun init(context: Context) {
+    catProducerWithSql = CatProducerWithSql(context.applicationContext)
+}
 
-    fun destroy() {
-        catProducerWithSql.executeSqlHelperClose()
-    }
+fun destroy() {
+    catProducerWithSql.executeSqlHelperClose()
+}
+
+ */
 }

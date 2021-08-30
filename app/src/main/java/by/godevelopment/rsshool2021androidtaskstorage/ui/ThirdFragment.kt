@@ -1,4 +1,4 @@
-package by.godevelopment.rsshool2021androidtaskstorage
+package by.godevelopment.rsshool2021androidtaskstorage.ui
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,11 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation.findNavController
+import by.godevelopment.rsshool2021androidtaskstorage.R
 import by.godevelopment.rsshool2021androidtaskstorage.database.SqlBox
 import by.godevelopment.rsshool2021androidtaskstorage.databinding.FragmentThirdBinding
-import by.godevelopment.rsshool2021androidtaskstorage.entity.Cat
 import by.godevelopment.rsshool2021androidtaskstorage.entity.OrderType
-import com.google.android.material.snackbar.Snackbar
 
 class ThirdFragment : Fragment() {
 

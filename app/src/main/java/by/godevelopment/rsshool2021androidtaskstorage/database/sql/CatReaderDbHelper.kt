@@ -1,4 +1,4 @@
-package by.godevelopment.rsshool2021androidtaskstorage.database
+package by.godevelopment.rsshool2021androidtaskstorage.database.sql
 
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
@@ -10,7 +10,8 @@ class CatReaderDbHelper(context: Context) : SQLiteOpenHelper(
     context,
     DATABASE_NAME,
     null,
-    DATABASE_VERSION){
+    DATABASE_VERSION
+){
 
     override fun onCreate(db: SQLiteDatabase) {
         db.execSQL(SQL_CREATE_ENTRIES)
@@ -40,7 +41,7 @@ class CatReaderDbHelper(context: Context) : SQLiteOpenHelper(
         // It's not required, but this can help your database work harmoniously with the Android framework.
         private const val SQL_CREATE_ENTRIES =
             "CREATE TABLE ${ContractDB.FeedEntry.TABLE_NAME} (" +
-                    "${BaseColumns._ID} INTEGER PRIMARY KEY," +
+                    "${ContractDB.FeedEntry.COLUMN_NAME_ID} INTEGER PRIMARY KEY," +
                     "${ContractDB.FeedEntry.COLUMN_NAME_NAME} TEXT," +
                     "${ContractDB.FeedEntry.COLUMN_NAME_AGE} INTEGER," +
                     "${ContractDB.FeedEntry.COLUMN_NAME_BREED} TEXT)"

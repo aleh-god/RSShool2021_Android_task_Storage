@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/FirstFragment_dest"
-        android:name="by.godevelopment.rsshool2021androidtaskstorage.FirstFragment"
+        android:name="by.godevelopment.rsshool2021androidtaskstorage.ui.FirstFragment"
         android:label="@string/first_fragment_label"
         tools:layout="@layout/fragment_first"
         >
@@ -26,7 +26,7 @@
 
     <fragment
         android:id="@+id/SecondFragment_dest"
-        android:name="by.godevelopment.rsshool2021androidtaskstorage.SecondFragment"
+        android:name="by.godevelopment.rsshool2021androidtaskstorage.ui.SecondFragment"
         android:label="@string/second_fragment_label"
         tools:layout="@layout/fragment_second">
 
@@ -37,7 +37,7 @@
 
     <fragment
         android:id="@+id/ThirdFragment_dest"
-        android:name="by.godevelopment.rsshool2021androidtaskstorage.ThirdFragment"
+        android:name="by.godevelopment.rsshool2021androidtaskstorage.ui.ThirdFragment"
         android:label="@string/third_fragment_label"
         tools:layout="@layout/fragment_third">
 

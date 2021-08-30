@@ -1,4 +1,4 @@
-package by.godevelopment.rsshool2021androidtaskstorage
+package by.godevelopment.rsshool2021androidtaskstorage.ui
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
+import by.godevelopment.rsshool2021androidtaskstorage.R
 import by.godevelopment.rsshool2021androidtaskstorage.database.SqlBox
 import by.godevelopment.rsshool2021androidtaskstorage.databinding.FragmentSecondBinding
 import com.google.android.material.snackbar.Snackbar
